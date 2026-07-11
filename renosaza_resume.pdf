@@ -1,0 +1,101 @@
+%PDF-1.4
+%ASCII-PDF
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 5547 >>
+stream
+0.96 0.95 0.92 rg 0 0 595 842 re f
+0.05 0.05 0.06 rg 0 762 595 80 re f
+0.82 0.05 0.12 rg 0 0 12 842 re f
+0.05 0.05 0.06 RG 0.8 w 36 736 m 559 736 l S
+BT /F2 25 Tf 1.000 1.000 1.000 rg 36 798 Td (RENOSAZA) Tj ET
+BT /F2 11 Tf 0.850 0.850 0.870 rg 36 778 Td (BACKEND & INFRASTRUCTURE ENGINEER) Tj ET
+BT /F2 8.5 Tf 1.000 1.000 1.000 rg 355 798 Td (BACKEND FIRST / PRODUCTION AWARE) Tj ET
+BT /F1 9 Tf 0.850 0.850 0.870 rg 355 779 Td (Geospatial Systems / Applied AI) Tj ET
+BT /F2 10 Tf 0.820 0.050 0.120 rg 36 710 Td (PROFILE) Tj ET
+BT /F1 10.2 Tf 0.180 0.180 0.200 rg 36 692 Td (Backend-oriented engineer who turns unclear requirements, fragmented data and manual) Tj ET
+BT /F1 10.2 Tf 0.180 0.180 0.200 rg 36 678 Td (processes into APIs, services, internal platforms and automation. I work from process) Tj ET
+BT /F1 10.2 Tf 0.180 0.180 0.200 rg 36 664 Td (analysis and architecture through deployment, diagnostics and end-to-end user-flow) Tj ET
+BT /F1 10.2 Tf 0.180 0.180 0.200 rg 36 650 Td (validation. Experience delivering solutions for government organizations and private) Tj ET
+BT /F1 10.2 Tf 0.180 0.180 0.200 rg 36 636 Td (clients.) Tj ET
+0.450 0.450 0.450 RG 0.6 w 36 620 m 559 620 l S
+BT /F2 10 Tf 0.820 0.050 0.120 rg 36 598 Td (CONTACT) Tj ET
+BT /F1 10 Tf 0.080 0.080 0.090 rg 36 579 Td (Telegram: @rize02) Tj ET
+BT /F1 10 Tf 0.080 0.080 0.090 rg 36 562 Td (GitHub: github.com/renosaza) Tj ET
+BT /F1 10 Tf 0.080 0.080 0.090 rg 36 545 Td (Portfolio: renosaza.github.io) Tj ET
+BT /F2 10 Tf 0.820 0.050 0.120 rg 315 598 Td (CORE STACK) Tj ET
+BT /F1 9.6 Tf 0.080 0.080 0.090 rg 315 579 Td (Python / Java / Rust / SQL) Tj ET
+BT /F1 9.6 Tf 0.080 0.080 0.090 rg 315 562 Td (FastAPI / REST APIs / PostgreSQL / Redis) Tj ET
+BT /F1 9.6 Tf 0.080 0.080 0.090 rg 315 545 Td (Linux / Docker / nginx / CI/CD) Tj ET
+BT /F1 9.6 Tf 0.080 0.080 0.090 rg 315 528 Td (LLM APIs / RAG / Tool Calling / Embeddings) Tj ET
+0.450 0.450 0.450 RG 0.6 w 36 515 m 559 515 l S
+BT /F2 10 Tf 0.820 0.050 0.120 rg 36 493 Td (KEY EXPERTISE) Tj ET
+BT /F2 9.5 Tf 0.050 0.050 0.060 rg 36 462 Td (BACKEND) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 36 445 Td (API design, service architecture, databases,) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 36 433.5 Td (background jobs, authentication, file processing) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 36 422.0 Td (and integrations.) Tj ET
+BT /F2 9.5 Tf 0.050 0.050 0.060 rg 315 462 Td (INFRASTRUCTURE) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 315 445 Td (Linux deployment, Docker, nginx, logs, smoke) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 315 433.5 Td (checks, permissions, incident diagnostics and) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 315 422.0 Td (production support.) Tj ET
+BT /F2 9.5 Tf 0.050 0.050 0.060 rg 36 388 Td (GEOSPATIAL) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 36 371 Td (Map-centered interfaces, domain data, search,) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 36 359.5 Td (validation and spatial workflows used for) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 36 348.0 Td (analysis and coordination.) Tj ET
+BT /F2 9.5 Tf 0.050 0.050 0.060 rg 315 388 Td (APPLIED AI) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 315 371 Td (AI assistants connected to APIs, documents,) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 315 359.5 Td (forms, notifications, tool calling, RAG and) Tj ET
+BT /F1 8.8 Tf 0.220 0.220 0.240 rg 315 348.0 Td (workflow automation.) Tj ET
+0.450 0.450 0.450 RG 0.6 w 36 320 m 559 320 l S
+BT /F2 10 Tf 0.820 0.050 0.120 rg 36 298 Td (SELECTED EXPERIENCE) Tj ET
+BT /F2 9.2 Tf 0.050 0.050 0.060 rg 36 276 Td (GEOSPATIAL OPERATIONS PLATFORM) Tj ET
+BT /F2 7.5 Tf 0.820 0.050 0.120 rg 390 276 Td (PRIVATE PROJECT) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 261 Td (Development of a domain-specific map platform joining structured records, spatial context,) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 250.5 Td (search, validation and backend workflows. The map functions as an operational layer for) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 240.0 Td (analysis and decision-making.) Tj ET
+BT /F2 9.2 Tf 0.050 0.050 0.060 rg 36 220.5 Td (AI CHATBOTS & WORKFLOW ASSISTANTS) Tj ET
+BT /F2 7.5 Tf 0.820 0.050 0.120 rg 390 220.5 Td (CLIENT WORK) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 205.5 Td (Integration of task-focused assistants with APIs, documents, forms, notifications, routing,) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 195.0 Td (context and business logic. Designed to reduce manual work rather than act as generic model) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 184.5 Td (wrappers.) Tj ET
+BT /F2 9.2 Tf 0.050 0.050 0.060 rg 36 165.0 Td (BACKEND SERVICES & INTERNAL TOOLS) Tj ET
+BT /F2 7.5 Tf 0.820 0.050 0.120 rg 390 165.0 Td (SYSTEMS) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 150.0 Td (APIs, service components, automation, administrative utilities and reporting flows using) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 139.5 Td (PostgreSQL, Redis, background jobs, file processing and Linux-based operation.) Tj ET
+BT /F2 9.2 Tf 0.050 0.050 0.060 rg 36 120.0 Td (APPLIED ML & DATA PIPELINES) Tj ET
+BT /F2 7.5 Tf 0.820 0.050 0.120 rg 390 120.0 Td (APPLIED R&D) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 105.0 Td (LLMs, embeddings, retrieval, classification, structured extraction, tabular processing,) Tj ET
+BT /F1 8.5 Tf 0.250 0.250 0.270 rg 36 94.5 Td (normalization and practical quality evaluation.) Tj ET
+0.05 0.05 0.06 rg 0 0 595 34 re f
+BT /F2 8.5 Tf 1.000 1.000 1.000 rg 36 13 Td (renosaza / 2026) Tj ET
+BT /F1 8.5 Tf 0.900 0.900 0.920 rg 415 13 Td (Telegram @rize02) Tj ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 5 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Type /Pages /Kids [4 0 R] /Count 1 >>
+endobj
+6 0 obj
+<< /Type /Catalog /Pages 5 0 R >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000020 00000 n 
+0000000090 00000 n 
+0000000165 00000 n 
+0000005763 00000 n 
+0000005899 00000 n 
+0000005956 00000 n 
+trailer
+<< /Size 7 /Root 6 0 R >>
+startxref
+6005
+%%EOF
