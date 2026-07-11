@@ -1,0 +1,65 @@
+%PDF-1.4
+%ASCII
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 2659 >>
+stream
+0.07 0.07 0.08 rg
+0 700 595 142 re f
+BT /F2 30 Tf 1 1 1 rg 42 795 Td (RENOSAZA) Tj ET
+BT /F2 10 Tf 0.82 0.95 0.22 rg 42 766 Td (BACKEND ENGINEER / INFRASTRUCTURE / GEOSPATIAL / APPLIED AI) Tj ET
+BT /F1 9 Tf 0.75 0.75 0.75 rg 42 744 Td (github.com/renosaza   |   t.me/rize02) Tj ET
+BT /F1 9 Tf 0.75 0.75 0.75 rg 42 728 Td (Government organizations and private clients) Tj ET
+BT /F2 11 Tf 0.56 0.09 0.16 rg 42 665 Td (PROFILE) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 645 Td (Backend-oriented engineer building production systems around operational data, maps,) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 631 Td (automation and AI integrations. Turns incomplete requirements and fragmented workflows) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 617 Td (into APIs, services, internal tools and deployable products.) Tj ET
+BT /F2 11 Tf 0.56 0.09 0.16 rg 42 596 Td (SELECTED EXPERIENCE) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 576 Td (Geospatial platform: map-centered operational layer combining structured records,) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 562 Td (spatial context, search, validation and backend workflows.) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 546 Td (AI assistants and chatbots: integrations with APIs, documents, forms, notifications,) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 532 Td (tool calling and internal business logic.) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 516 Td (Automation and internal tooling: scripts, integrations, reporting flows and admin) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 502 Td (utilities replacing repetitive manual work with traceable processes.) Tj ET
+BT /F2 11 Tf 0.56 0.09 0.16 rg 42 481 Td (CORE STACK) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 461 Td (Backend: Python, Java, Rust, FastAPI, REST APIs, authentication, background jobs) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 447 Td (Data: PostgreSQL, Redis, validation, tabular processing, geospatial workflows) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 433 Td (Infrastructure: Linux, Docker, nginx, deployment, logs, smoke testing, CI/CD) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 419 Td (AI and ML: LLM APIs, chatbots, tool calling, RAG, embeddings, classification) Tj ET
+BT /F2 11 Tf 0.56 0.09 0.16 rg 42 398 Td (WORKING APPROACH) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 378 Td (Understand the real process, define service and data boundaries, build close to production,) Tj ET
+BT /F1 9 Tf 0.15 0.15 0.16 rg 42 364 Td (and validate the complete user flow including failure modes and recoverability.) Tj ET
+0.72 0.72 0.72 RG
+42 48 m 553 48 l S
+BT /F1 8 Tf 0.4 0.4 0.4 rg 42 31 Td (Portfolio: https://renosaza.github.io) Tj ET
+BT /F1 8 Tf 0.4 0.4 0.4 rg 491 31 Td (Updated 2026) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000016 00000 n 
+0000000065 00000 n 
+0000000122 00000 n 
+0000000258 00000 n 
+0000002969 00000 n 
+0000003039 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+3114
+%%EOF
