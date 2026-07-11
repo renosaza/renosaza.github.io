@@ -13,4 +13,4 @@ Personal portfolio of **renosaza**.
 - Website: https://renosaza.github.io
 - Telegram: https://t.me/rize02
 - GitHub: https://github.com/renosaza
-- Resume: [`renosaza_resume_ru.pdf`](./renosaza_resume_ru.pdf)
+- Resume: [`renosaza_resume.pdf`](./renosaza_resume.pdf)
