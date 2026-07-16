@@ -1,0 +1,44 @@
+name: Build resume PDFs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/generate_site_resumes.py
+      - .github/workflows/build-resumes.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-dejavu-core
+          python -m pip install --upgrade pip
+          python -m pip install reportlab
+
+      - name: Generate PDFs
+        run: python tools/generate_site_resumes.py
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add renosaza_resume.pdf renosaza_resume_ru.pdf
+          git diff --cached --quiet && exit 0
+          git commit -m "Update English and Russian resume PDFs"
+          git push
