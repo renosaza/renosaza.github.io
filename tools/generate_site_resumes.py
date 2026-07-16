@@ -1,183 +1,317 @@
 from pathlib import Path
+from xml.sax.saxutils import escape
 
-from reportlab.lib.colors import HexColor, white
-from reportlab.lib.enums import TA_LEFT
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Paragraph
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, KeepTogether
 
 ROOT = Path(__file__).resolve().parents[1]
 FONT_REG = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 FONT_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-pdfmetrics.registerFont(TTFont("DV", FONT_REG))
-pdfmetrics.registerFont(TTFont("DV-Bold", FONT_BOLD))
+pdfmetrics.registerFont(TTFont("ResumeSans", FONT_REG))
+pdfmetrics.registerFont(TTFont("ResumeSans-Bold", FONT_BOLD))
 
-DARK = HexColor("#0d0d0f")
-RED = HexColor("#d10d20")
-PAPER = HexColor("#f5f2ec")
-TEXT = HexColor("#28282c")
-MUTED = HexColor("#66666c")
-LINE = HexColor("#9b9ba0")
-
-
-def draw_para(c, text, x, y_top, width, size=9, leading=None, color=TEXT, bold=False):
-    leading = leading or size * 1.32
-    style = ParagraphStyle(
-        "resume",
-        fontName="DV-Bold" if bold else "DV",
-        fontSize=size,
-        leading=leading,
-        textColor=color,
-        alignment=TA_LEFT,
-    )
-    p = Paragraph(text, style)
-    _, height = p.wrap(width, 800)
-    p.drawOn(c, x, y_top - height)
-    return y_top - height
+NAVY = colors.HexColor("#203864")
+TEXT = colors.HexColor("#20242A")
+MUTED = colors.HexColor("#5B6573")
+LINE = colors.HexColor("#D8DEE8")
+LIGHT = colors.HexColor("#F4F6F9")
 
 
-def section(c, title, x, y, width):
-    c.setFont("DV-Bold", 9.2)
-    c.setFillColor(RED)
-    c.drawString(x, y, title.upper())
-    c.setStrokeColor(LINE)
-    c.setLineWidth(0.5)
-    c.line(x, y - 4, x + width, y - 4)
-    return y - 17
+def p(text, style):
+    return Paragraph(text, style)
 
 
-def content(lang):
-    if lang == "en":
-        return {
-            "name": "LAPOSHIN VLADISLAV",
-            "role": "AI / BACKEND ENGINEER",
-            "strap": "LLM SYSTEMS / AGENTS / RAG / PRODUCTION",
-            "meta": "3 YEARS 2 MONTHS OF PROJECT EXPERIENCE",
-            "profile_t": "PROFILE",
-            "profile": "AI-oriented backend engineer building applied software, dialogue assistants and LLM integrations. I work across the full delivery cycle: process analysis, architecture, Python backend, tool and function calling, context enrichment, structured output, quality checks, deployment, logging and production diagnostics.",
-            "contact_t": "CONTACT",
-            "stack_t": "CORE STACK",
-            "expert_t": "KEY EXPERTISE",
-            "exp_t": "SELECTED PROJECT EXPERIENCE",
-            "edu_t": "EDUCATION",
-            "contact": ["Telegram: @rize02", "GitHub: github.com/renosaza", "Portfolio: renosaza.github.io"],
-            "stack": ["Python / Java / Rust / SQL", "FastAPI / REST APIs / PostgreSQL / Redis", "Linux / Docker / nginx / CI/CD", "LLM APIs / RAG / Tools / Embeddings"],
-            "experts": [
-                ("LLM SYSTEMS", "Prompt design, structured output, function/tool calling, agents, context management, RAG, embeddings and evaluation."),
-                ("BACKEND", "Python, FastAPI, REST APIs, PostgreSQL, Redis, background jobs, authentication, file processing and integrations."),
-                ("INFRASTRUCTURE", "Linux, Docker, nginx, CI/CD, logs, smoke checks, observability and production incident diagnostics."),
-                ("DATA & DOCUMENTS", "Tabular data, document workflows, normalization, structured extraction, validation and retrieval pipelines."),
-            ],
-            "projects": [
-                ("AI ASSISTANTS & WORKFLOW AUTOMATION", "PROJECT AND CLIENT WORK", "Dialogue assistants connected to APIs, documents, forms and internal workflows. Tool calling, routing, context handling, prompt templates, structured responses and test scenarios."),
-                ("GEOSPATIAL PLATFORM & BATCH GEOCODER", "PRIVATE / INTERNAL PROJECT", "Map-centered operational platform and backend geocoding pipeline for XLSX/XLS/CSV data: address detection, normalization, confidence checks, review flows and production export."),
-                ("PARAGON TERMINAL AI KERNEL", "OPEN-SOURCE PROJECT", "Architecture and compiled Rust workspace scaffold for an AI terminal kernel: provider boundary, agent runtime, permissions, session event log, Git visibility and MCP/module layers."),
-            ],
-            "education": "Far Eastern Federal University (FEFU), Institute of Mathematics and Computer Technologies - currently studying.",
-            "footer": "Laposhin Vladislav / 2026",
-        }
+def bullet(text, styles):
+    return Paragraph(f"• {escape(text)}", styles["bullet"])
+
+
+def role_block(title, role, bullets, styles):
+    items = [
+        Paragraph(escape(title), styles["project_title"]),
+        Paragraph(escape(role), styles["project_role"]),
+        Spacer(1, 1.5 * mm),
+    ]
+    items.extend(bullet(item, styles) for item in bullets)
+    items.append(Spacer(1, 3.3 * mm))
+    return KeepTogether(items)
+
+
+def section(title, styles):
+    return [
+        Spacer(1, 2.5 * mm),
+        Paragraph(escape(title), styles["section"]),
+        Spacer(1, 1.4 * mm),
+    ]
+
+
+def styles_for():
+    base = getSampleStyleSheet()
     return {
-        "name": "ЛАПОШИН ВЛАДИСЛАВ",
-        "role": "AI / BACKEND-ИНЖЕНЕР",
-        "strap": "LLM-СИСТЕМЫ / АГЕНТЫ / RAG / ПРОДАКШЕН",
-        "meta": "3 ГОДА 2 МЕСЯЦА ПРОЕКТНОГО ОПЫТА",
-        "profile_t": "ПРОФИЛЬ",
-        "profile": "AI-ориентированный backend-инженер: разрабатываю прикладные системы, диалоговых ассистентов и LLM-интеграции. Работаю по полному циклу - анализ процесса, архитектура, Python-backend, tools/function calling, обогащение контекста, structured output, проверка качества, деплой, логирование и диагностика в продакшене.",
-        "contact_t": "КОНТАКТЫ",
-        "stack_t": "ОСНОВНОЙ СТЕК",
-        "expert_t": "КЛЮЧЕВАЯ ЭКСПЕРТИЗА",
-        "exp_t": "ИЗБРАННЫЙ ПРОЕКТНЫЙ ОПЫТ",
-        "edu_t": "ОБРАЗОВАНИЕ",
-        "contact": ["Telegram: @rize02", "GitHub: github.com/renosaza", "Портфолио: renosaza.github.io"],
-        "stack": ["Python / Java / Rust / SQL", "FastAPI / REST APIs / PostgreSQL / Redis", "Linux / Docker / nginx / CI/CD", "LLM APIs / RAG / Tools / Embeddings"],
-        "experts": [
-            ("LLM-СИСТЕМЫ", "Промпты, structured output, function/tool calling, агенты, управление контекстом, RAG, эмбеддинги и оценка качества."),
-            ("BACKEND", "Python, FastAPI, REST API, PostgreSQL, Redis, фоновые задачи, авторизация, обработка файлов и интеграции."),
-            ("ИНФРАСТРУКТУРА", "Linux, Docker, nginx, CI/CD, логи, smoke-проверки, наблюдаемость и диагностика инцидентов в продакшене."),
-            ("ДАННЫЕ И ДОКУМЕНТЫ", "Табличные данные, документооборот, нормализация, структурированное извлечение, валидация и retrieval-пайплайны."),
-        ],
-        "projects": [
-            ("AI-АССИСТЕНТЫ И АВТОМАТИЗАЦИЯ", "ПРОЕКТНАЯ И КЛИЕНТСКАЯ РАБОТА", "Диалоговые ассистенты с подключением API, документов, форм и внутренних процессов. Tool calling, маршрутизация, контекст, шаблоны промптов, структурированные ответы и тестовые сценарии."),
-            ("ГЕОПЛАТФОРМА И ПАКЕТНЫЙ ГЕОКОДЕР", "ЧАСТНЫЙ / ВНУТРЕННИЙ ПРОЕКТ", "Картографическая операционная платформа и backend-пайплайн для XLSX/XLS/CSV: поиск адресных колонок, нормализация, оценка уверенности, ручная проверка и выгрузка результатов."),
-            ("PARAGON - ТЕРМИНАЛЬНОЕ AI-ЯДРО", "OPEN-SOURCE ПРОЕКТ", "Архитектура и компилируемый Rust workspace scaffold: абстракция провайдеров, контур агентов, права tools, журнал сессий, Git-видимость и слои MCP/модулей."),
-        ],
-        "education": "Дальневосточный федеральный университет (ДВФУ), Институт математики и компьютерных технологий - обучаюсь.",
-        "footer": "Лапошин Владислав / 2026",
+        "name": ParagraphStyle(
+            "name", parent=base["Normal"], fontName="ResumeSans-Bold",
+            fontSize=21, leading=24, textColor=NAVY, alignment=TA_CENTER,
+            spaceAfter=2,
+        ),
+        "role": ParagraphStyle(
+            "role", parent=base["Normal"], fontName="ResumeSans-Bold",
+            fontSize=11.5, leading=14, textColor=TEXT, alignment=TA_CENTER,
+            spaceAfter=4,
+        ),
+        "contact": ParagraphStyle(
+            "contact", parent=base["Normal"], fontName="ResumeSans",
+            fontSize=8.7, leading=11, textColor=MUTED, alignment=TA_CENTER,
+            spaceAfter=5,
+        ),
+        "summary_meta": ParagraphStyle(
+            "summary_meta", parent=base["Normal"], fontName="ResumeSans-Bold",
+            fontSize=9.2, leading=12, textColor=NAVY, alignment=TA_CENTER,
+            backColor=LIGHT, borderPadding=(5, 8, 5, 8), spaceBefore=2,
+            spaceAfter=5,
+        ),
+        "section": ParagraphStyle(
+            "section", parent=base["Normal"], fontName="ResumeSans-Bold",
+            fontSize=11.2, leading=14, textColor=NAVY, borderColor=LINE,
+            borderWidth=0, borderPadding=0, spaceBefore=1, spaceAfter=1,
+        ),
+        "body": ParagraphStyle(
+            "body", parent=base["Normal"], fontName="ResumeSans",
+            fontSize=8.75, leading=12.2, textColor=TEXT, alignment=TA_LEFT,
+            spaceAfter=2,
+        ),
+        "bullet": ParagraphStyle(
+            "bullet", parent=base["Normal"], fontName="ResumeSans",
+            fontSize=8.55, leading=11.7, textColor=TEXT, leftIndent=4 * mm,
+            firstLineIndent=-3.3 * mm, spaceAfter=1.4,
+        ),
+        "project_title": ParagraphStyle(
+            "project_title", parent=base["Normal"], fontName="ResumeSans-Bold",
+            fontSize=9.6, leading=12.3, textColor=TEXT, spaceAfter=1,
+        ),
+        "project_role": ParagraphStyle(
+            "project_role", parent=base["Normal"], fontName="ResumeSans-Bold",
+            fontSize=8.2, leading=10.5, textColor=MUTED, spaceAfter=1,
+        ),
     }
 
 
+def data(lang):
+    if lang == "en":
+        return {
+            "name": "Laposhin Vladislav",
+            "role": "AI / LLM Engineer (Middle+)",
+            "contact": "Telegram: @rize02  |  GitHub: github.com/renosaza  |  Portfolio: renosaza.github.io",
+            "meta": "3 years 2 months of cumulative project experience | Remote work | Full delivery cycle",
+            "profile_t": "Professional profile",
+            "profile": "AI-focused backend engineer with 3 years and 2 months of cumulative project experience. I design dialogue assistants and LLM systems, connecting models to APIs, documents, knowledge bases and internal services. I work across the full cycle: business-process analysis and hypothesis validation, architecture, production-ready Python backend, tools/function calling, RAG and context enrichment, structured output, quality testing, deployment, logging and production diagnostics.",
+            "skills_t": "Core competencies",
+            "skills": [
+                "LLM and agents: prompt engineering, structured output, function/tool calling, agent chains, context and memory management, routing and fallback scenarios.",
+                "RAG and data: embeddings, retrieval, data preparation and normalization, chunking/indexing architecture, knowledge-base quality evaluation and structured extraction.",
+                "Backend: Python, FastAPI, REST APIs, PostgreSQL, Redis, background jobs, authentication, integrations, file and document processing.",
+                "MCP and tools: design of tool layers, MCP integrations and contracts between agents, external services and user interfaces.",
+                "Reliability: Linux, Docker, nginx, CI/CD, logging, smoke and UI testing, observability, incident diagnostics, safe deployment and rollback.",
+                "Communication: architecture documentation, decomposition of unclear requirements, solution alignment with stakeholders and transfer of technical context to a team.",
+            ],
+            "experience_t": "Project experience - 3 years 2 months",
+            "projects_page1": [
+                (
+                    "AI assistants and workflow automation",
+                    "AI / Backend Engineer",
+                    [
+                        "Designed dialogue assistants for web, Telegram and internal workflows with APIs, documents, forms, notifications and business logic.",
+                        "Implemented tool/function calling, request routing, context management, prompt templates and structured responses.",
+                        "Developed Python backend components and integrations with LLM APIs, databases and external services, including error handling and controlled fallbacks.",
+                        "Validated quality with test sets and end-to-end user scenarios, versioned changes, logged behavior and analyzed unstable responses.",
+                    ],
+                ),
+                (
+                    "Geospatial platform and batch geocoder",
+                    "Backend / Data / AI Engineer",
+                    [
+                        "Developed an operational web platform combining domain records, maps, search, validation and backend workflows for analysis and coordination.",
+                        "Built an XLSX/XLS/CSV processing pipeline with automatic address-column detection, normalization, batch processing, confidence scoring and manual-review flows.",
+                        "Worked with large exports, quality validation and safe deployment of an isolated service inside an existing production environment.",
+                        "Used Linux, Docker and nginx with logging, smoke and UI checks, diagnosing data and infrastructure issues without disrupting the main product.",
+                    ],
+                ),
+            ],
+            "experience_cont_t": "Project experience - continued",
+            "projects_page2": [
+                (
+                    "Paragon - terminal AI kernel and agent architecture",
+                    "Project Author / Rust Engineer",
+                    [
+                        "Designed a modular terminal-first AI kernel architecture for cloud and local models, native coding agents and pluggable tools.",
+                        "Prepared a compiling Rust workspace scaffold with clear provider, agent, Git, storage, TUI and module boundaries.",
+                        "Defined tool permissions, session event logging, pause/resume/interrupt behavior, Git diff visibility and MCP/custom-profile/sandbox/approval layers.",
+                        "Documented architecture decisions, module contracts, risks and implementation order; the project is under active staged development.",
+                    ],
+                ),
+                (
+                    "Backend services and internal tools",
+                    "Backend Engineer",
+                    [
+                        "Built REST APIs, service components, PostgreSQL/Redis integrations, background jobs, file-processing flows, administrative utilities and reporting pipelines.",
+                        "Automated repetitive operations and connected fragmented tools into reproducible workflows with explicit logs and state.",
+                        "Supported the complete user path from requirements and data models to deployment, verification and failure recovery.",
+                    ],
+                ),
+            ],
+            "tech_t": "Technologies",
+            "tech": [
+                "Core: Python, FastAPI, SQL, PostgreSQL, Redis, REST APIs, Linux, Docker, nginx, Git, CI/CD, Bash.",
+                "AI / LLM: LLM APIs, prompt engineering, structured output, function/tool calling, RAG, embeddings, agents, memory/context, MCP, Ollama and local inference.",
+                "Additional: Java, Rust, tabular and document processing, geospatial systems, data validation, observability and architecture documentation.",
+            ],
+            "education_t": "Education",
+            "education": "Far Eastern Federal University (FEFU), Institute of Mathematics and Computer Technologies - currently studying toward a higher-education degree.",
+            "extra_t": "Additional information",
+            "extra": [
+                "Open profile and projects: github.com/renosaza; technical portfolio: renosaza.github.io.",
+                "I prefer tasks where an LLM is part of a measurable product: assistants, automation, knowledge retrieval, document processing and internal platforms.",
+                "I work beyond prompts, treating data, backend, integrations, security, deployment and observability as one system boundary.",
+            ],
+            "footer": "Laposhin Vladislav - AI / LLM Engineer",
+        }
+
+    return {
+        "name": "Лапошин Владислав",
+        "role": "AI / LLM-инженер (Middle+)",
+        "contact": "Telegram: @rize02  |  GitHub: github.com/renosaza  |  Портфолио: renosaza.github.io",
+        "meta": "Опыт: 3 года 2 месяца (проектная разработка) | Удалённая работа | Полный цикл разработки",
+        "profile_t": "Профессиональный профиль",
+        "profile": "AI-ориентированный backend-инженер с 3 годами 2 месяцами совокупного проектного опыта. Проектирую диалоговых ассистентов и LLM-системы, связываю модели с API, документами, базами знаний и внутренними сервисами. Работаю по полному циклу: анализ бизнес-процесса и гипотезы, архитектура, production-ready Python-backend, tools/function calling, RAG и обогащение контекста, structured output, тестирование качества, деплой, логирование и диагностика в продакшене.",
+        "skills_t": "Ключевые компетенции",
+        "skills": [
+            "LLM и агенты: prompt engineering, structured output, function/tool calling, агентные цепочки, управление контекстом и memory, маршрутизация, fallback-сценарии.",
+            "RAG и данные: эмбеддинги, retrieval, подготовка и нормализация данных, chunking/indexing на уровне архитектуры, оценка качества базы знаний, структурированное извлечение.",
+            "Backend: Python, FastAPI, REST API, PostgreSQL, Redis, фоновые задачи, авторизация, интеграции, обработка файлов и документов.",
+            "MCP и инструменты: проектирование tool-слоя, MCP-интеграций и контрактов между агентом, внешними сервисами и пользовательским интерфейсом.",
+            "Надёжность: Linux, Docker, nginx, CI/CD, логи, smoke/UI-проверки, наблюдаемость, диагностика инцидентов, безопасный деплой и откат.",
+            "Коммуникация: архитектурная документация, декомпозиция неясных требований, согласование решений с заказчиком и передача технического контекста команде.",
+        ],
+        "experience_t": "Проектный опыт - 3 года 2 месяца",
+        "projects_page1": [
+            (
+                "AI-ассистенты и автоматизация рабочих процессов",
+                "AI / Backend Engineer",
+                [
+                    "Проектирование диалоговых ассистентов для web-, Telegram- и внутренних сценариев с подключением API, документов, форм, уведомлений и бизнес-логики.",
+                    "Реализация tool/function calling, маршрутизации запросов, управления контекстом, шаблонов промптов и структурированных ответов.",
+                    "Разработка backend-компонентов на Python, интеграция с LLM API, базами данных и внешними сервисами; обработка ошибок и контролируемые fallback-сценарии.",
+                    "Проверка качества через тестовые наборы и пользовательские сценарии, версионирование изменений, логирование и анализ нестабильных ответов.",
+                ],
+            ),
+            (
+                "Геопространственная платформа и пакетный геокодер",
+                "Backend / Data / AI Engineer",
+                [
+                    "Разработка операционной веб-платформы, объединяющей доменные записи, карту, поиск, валидацию и backend-процессы для анализа и координации.",
+                    "Пайплайн обработки XLSX/XLS/CSV: автоматическое определение адресных колонок, нормализация, пакетная обработка, оценка уверенности и сценарии ручной проверки.",
+                    "Работа с большими выгрузками, проверкой качества результатов и безопасным развёртыванием отдельного сервиса в существующем production-контуре.",
+                    "Linux/Docker/nginx, логи, smoke- и UI-проверки, диагностика проблем данных и инфраструктуры без нарушения работы основного продукта.",
+                ],
+            ),
+        ],
+        "experience_cont_t": "Проектный опыт - продолжение",
+        "projects_page2": [
+            (
+                "Paragon - терминальное AI-ядро и агентная архитектура",
+                "Автор проекта / Rust Engineer",
+                [
+                    "Спроектировал архитектуру модульного terminal-first AI-ядра для облачных и локальных моделей, нативных coding-агентов и подключаемых инструментов.",
+                    "Подготовил компилируемый Rust workspace scaffold с границами provider-, agent-, Git-, storage-, TUI- и module-подсистем.",
+                    "Заложил модель разрешений tools, журнал событий сессии, pause/resume/interrupt, видимость Git diff и слои MCP/custom profiles/sandbox/approvals.",
+                    "Документировал архитектурные решения, контракты модулей, риски и очередь реализации; проект находится в стадии последовательной разработки.",
+                ],
+            ),
+            (
+                "Backend-сервисы и внутренние инструменты",
+                "Backend Engineer",
+                [
+                    "REST API, сервисные компоненты, PostgreSQL/Redis, фоновые задачи, обработка файлов, административные утилиты и отчётные потоки.",
+                    "Автоматизация повторяющихся операций и интеграция разрозненных инструментов в воспроизводимые процессы с понятными логами и состояниями.",
+                    "Поддержка полного пользовательского сценария: от требований и схемы данных до деплоя, проверки и восстановления после сбоев.",
+                ],
+            ),
+        ],
+        "tech_t": "Технологии",
+        "tech": [
+            "Основной стек: Python, FastAPI, SQL, PostgreSQL, Redis, REST API, Linux, Docker, nginx, Git, CI/CD, Bash.",
+            "AI / LLM: LLM API, prompt engineering, structured output, function/tool calling, RAG, embeddings, agents, memory/context, MCP, Ollama, локальный inference.",
+            "Дополнительно: Java, Rust, обработка таблиц и документов, геопространственные системы, data validation, observability, архитектурная документация.",
+        ],
+        "education_t": "Образование",
+        "education": "Дальневосточный федеральный университет (ДВФУ), Институт математики и компьютерных технологий - высшее образование, обучаюсь.",
+        "extra_t": "Дополнительная информация",
+        "extra": [
+            "Открытый профиль и проекты: github.com/renosaza; техническое портфолио: renosaza.github.io.",
+            "Предпочитаю задачи, где LLM является частью измеримого продукта: ассистенты, автоматизация, поиск по знаниям, обработка документов и внутренние платформы.",
+            "Не ограничиваюсь промптами: рассматриваю данные, backend, интеграции, безопасность, деплой и наблюдаемость как единый контур системы.",
+        ],
+        "footer": "Лапошин Владислав - AI / LLM-инженер",
+    }
+
+
+def page_decor(canvas, doc, footer_text):
+    canvas.saveState()
+    width, _ = A4
+    canvas.setStrokeColor(LINE)
+    canvas.setLineWidth(0.5)
+    canvas.line(doc.leftMargin, 14 * mm, width - doc.rightMargin, 14 * mm)
+    canvas.setFont("ResumeSans", 7.4)
+    canvas.setFillColor(MUTED)
+    canvas.drawString(doc.leftMargin, 9 * mm, footer_text)
+    canvas.drawRightString(width - doc.rightMargin, 9 * mm, str(doc.page))
+    canvas.restoreState()
+
+
 def build(path, lang):
-    d = content(lang)
-    c = canvas.Canvas(str(path), pagesize=A4)
-    width, height = A4
-    c.setTitle(f"Laposhin Vladislav resume ({lang})")
-    c.setAuthor("Laposhin Vladislav")
-    c.setFillColor(PAPER)
-    c.rect(0, 0, width, height, fill=1, stroke=0)
-    c.setFillColor(DARK)
-    c.rect(0, height - 80, width, 80, fill=1, stroke=0)
-    c.setFillColor(RED)
-    c.rect(0, 0, 12, height, fill=1, stroke=0)
+    d = data(lang)
+    styles = styles_for()
+    doc = SimpleDocTemplate(
+        str(path), pagesize=A4, rightMargin=17 * mm, leftMargin=17 * mm,
+        topMargin=14 * mm, bottomMargin=19 * mm,
+        title=f"{d['name']} - {d['role']}", author=d["name"],
+        subject="Official AI / LLM engineer resume",
+    )
 
-    c.setFillColor(white)
-    c.setFont("DV-Bold", 21)
-    c.drawString(36, height - 46, d["name"])
-    c.setFont("DV-Bold", 10.5)
-    c.setFillColor(HexColor("#dddddf"))
-    c.drawString(36, height - 66, d["role"])
-    c.setFont("DV-Bold", 8)
-    c.setFillColor(white)
-    c.drawRightString(width - 36, height - 44, d["strap"])
-    c.setFont("DV", 8)
-    c.setFillColor(HexColor("#dddddf"))
-    c.drawRightString(width - 36, height - 63, d["meta"])
+    story = [
+        p(escape(d["name"]), styles["name"]),
+        p(escape(d["role"]), styles["role"]),
+        p(escape(d["contact"]), styles["contact"]),
+        p(escape(d["meta"]), styles["summary_meta"]),
+    ]
+    story += section(d["profile_t"], styles)
+    story.append(p(escape(d["profile"]), styles["body"]))
+    story += section(d["skills_t"], styles)
+    story.extend(bullet(item, styles) for item in d["skills"])
+    story += section(d["experience_t"], styles)
+    for title, role, bullets in d["projects_page1"]:
+        story.append(role_block(title, role, bullets, styles))
 
-    x0, x1, colw = 36, 315, 244
-    y = height - 105
-    y = section(c, d["profile_t"], x0, y, width - 72)
-    y = draw_para(c, d["profile"], x0, y, width - 72, 9.3, 12.2) - 13
+    story.append(PageBreak())
+    story += section(d["experience_cont_t"], styles)
+    for title, role, bullets in d["projects_page2"]:
+        story.append(role_block(title, role, bullets, styles))
+    story += section(d["tech_t"], styles)
+    story.extend(bullet(item, styles) for item in d["tech"])
+    story += section(d["education_t"], styles)
+    story.append(p(escape(d["education"]), styles["body"]))
+    story += section(d["extra_t"], styles)
+    story.extend(bullet(item, styles) for item in d["extra"])
 
-    yl = section(c, d["contact_t"], x0, y, colw)
-    yl = draw_para(c, "<br/>".join(d["contact"]), x0, yl, colw, 9.2, 15)
-    yr = section(c, d["stack_t"], x1, y, colw)
-    yr = draw_para(c, "<br/>".join(d["stack"]), x1, yr, colw, 9.0, 14.5)
-    y = min(yl, yr) - 13
-
-    y = section(c, d["expert_t"], x0, y, width - 72)
-    positions = [(x0, y), (x1, y), (x0, y - 66), (x1, y - 66)]
-    bottoms = []
-    for (title, body), (xx, yy) in zip(d["experts"], positions):
-        c.setFont("DV-Bold", 8.7)
-        c.setFillColor(DARK)
-        c.drawString(xx, yy, title)
-        bottoms.append(draw_para(c, body, xx, yy - 10, colw, 7.9, 10.2, MUTED))
-    y = min(bottoms) - 12
-
-    y = section(c, d["exp_t"], x0, y, width - 72)
-    for title, tag, body in d["projects"]:
-        c.setFont("DV-Bold", 8.5)
-        c.setFillColor(DARK)
-        c.drawString(x0, y, title)
-        c.setFont("DV-Bold", 6.8)
-        c.setFillColor(RED)
-        c.drawRightString(width - 36, y, tag)
-        y = draw_para(c, body, x0, y - 9, width - 72, 7.7, 9.7, HexColor("#45454a")) - 8
-
-    y = section(c, d["edu_t"], x0, y, width - 72)
-    draw_para(c, d["education"], x0, y, width - 72, 8.2, 10.5)
-
-    c.setFillColor(DARK)
-    c.rect(0, 0, width, 30, fill=1, stroke=0)
-    c.setFillColor(white)
-    c.setFont("DV-Bold", 8)
-    c.drawString(36, 11, d["footer"])
-    c.setFont("DV", 8)
-    c.setFillColor(HexColor("#e5e5e7"))
-    c.drawRightString(width - 36, 11, "Telegram @rize02")
-    c.save()
+    doc.build(
+        story,
+        onFirstPage=lambda c, doc_: page_decor(c, doc_, d["footer"]),
+        onLaterPages=lambda c, doc_: page_decor(c, doc_, d["footer"]),
+    )
 
 
 if __name__ == "__main__":
